@@ -39,7 +39,7 @@ export default function OutlinedCard() {
  
   var task = [];
   const displayTask = async (employerName) => {
-   let call = "/displayTask/?";
+   let call = "https://businessaide-backend.herokuapp.com/displayTask/?";
     call = call + "employerName=" + employerName;
     let result = await (await fetch(call)).json();
   
@@ -57,7 +57,7 @@ export default function OutlinedCard() {
    for (let i = 0 ; i < task.length; i++ ) {
 
    
-   let calltask = "/mainTaskProgress/?";
+   let calltask = "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
       calltask = calltask + "tasks=" + task[i] + "&";
       calltask = calltask + "employerName=" + employerName;
       let  resulttask = await (await fetch(calltask)).json();
@@ -69,7 +69,7 @@ export default function OutlinedCard() {
     console.log(progress)
   }; 
   const mainTaskProgress = async (mainTaskName, employerName) => {
-    let call = "/mainTaskProgress/?";
+    let call = "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
     let  result = await (await fetch(call)).json();
