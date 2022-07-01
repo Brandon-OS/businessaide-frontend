@@ -1,15 +1,15 @@
 {
-  "main.css": "h/static/css/main.5be49e70.chunk.css",
-  "main.js": "h/static/js/main.3e35e4f7.chunk.js",
-  "main.js.map": "h/static/js/main.3e35e4f7.chunk.js.map",
-  "runtime~main.js": "h/static/js/runtime~main.ff718ffb.js",
-  "runtime~main.js.map": "h/static/js/runtime~main.ff718ffb.js.map",
-  "static/js/2.6b657523.chunk.js": "h/static/js/2.6b657523.chunk.js",
-  "static/js/2.6b657523.chunk.js.map": "h/static/js/2.6b657523.chunk.js.map",
-  "static/js/3.2459ad61.chunk.js": "h/static/js/3.2459ad61.chunk.js",
-  "static/js/3.2459ad61.chunk.js.map": "h/static/js/3.2459ad61.chunk.js.map",
-  "index.html": "h/index.html",
-  "precache-manifest.d2cd300eb6e2283dd2606edda6350c86.js": "h/precache-manifest.d2cd300eb6e2283dd2606edda6350c86.js",
-  "service-worker.js": "h/service-worker.js",
-  "static/css/main.5be49e70.chunk.css.map": "h/static/css/main.5be49e70.chunk.css.map"
+  "main.css": "/businessaide-frontend/static/css/main.5be49e70.chunk.css",
+  "main.js": "/businessaide-frontend/static/js/main.3e35e4f7.chunk.js",
+  "main.js.map": "/businessaide-frontend/static/js/main.3e35e4f7.chunk.js.map",
+  "runtime~main.js": "/businessaide-frontend/static/js/runtime~main.ca8ffbe9.js",
+  "runtime~main.js.map": "/businessaide-frontend/static/js/runtime~main.ca8ffbe9.js.map",
+  "static/js/2.78ca8997.chunk.js": "/businessaide-frontend/static/js/2.78ca8997.chunk.js",
+  "static/js/2.78ca8997.chunk.js.map": "/businessaide-frontend/static/js/2.78ca8997.chunk.js.map",
+  "static/js/3.2459ad61.chunk.js": "/businessaide-frontend/static/js/3.2459ad61.chunk.js",
+  "static/js/3.2459ad61.chunk.js.map": "/businessaide-frontend/static/js/3.2459ad61.chunk.js.map",
+  "index.html": "/businessaide-frontend/index.html",
+  "precache-manifest.e22ef8911cbda98373206883d23ea69b.js": "/businessaide-frontend/precache-manifest.e22ef8911cbda98373206883d23ea69b.js",
+  "service-worker.js": "/businessaide-frontend/service-worker.js",
+  "static/css/main.5be49e70.chunk.css.map": "/businessaide-frontend/static/css/main.5be49e70.chunk.css.map"
 }
