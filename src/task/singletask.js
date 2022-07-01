@@ -64,7 +64,7 @@ export default function BasicCard(props) {
     window.location.reload(false);
   }
   const mainTaskProgress = async (tasks, employerName) => {
-    let call = "/mainTaskProgress/?";
+    let call = "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
     call = call + "tasks=" + tasks + "&";
     call = call + "employerName=" + employerName;
     let  result = await (await fetch(call)).json();
@@ -95,7 +95,7 @@ export default function BasicCard(props) {
 
   useEffect(() => {
     const viewMainTask = async (mainTaskName, employerName) => {
-      let call = "/getMainTaskData/?";
+      let call = "https://businessaide-backend.herokuapp.com/getMainTaskData/?";
       call = call + "mainTaskName=" + mainTaskName + "&";
       call = call + "employerName=" + employerName;
       let result = await (await fetch(call)).json();
@@ -122,7 +122,7 @@ useEffect (()=> {
 
   useEffect(() => {
     const viewSubTask = async (subTaskName, mainTaskName, employerName) => {
-      let call = "/getSubTaskData/?";
+      let call = "https://businessaide-backend.herokuapp.com/getSubTaskData/?";
       call = call + "subTaskName=" + subTaskName + "&";
       call = call + "mainTaskName=" + mainTaskName + "&";
       call = call + "employerName=" + employerName;
@@ -148,7 +148,7 @@ useEffect (()=> {
     console.log(progress);
   },[progress])
   const subTaskProgress = async (subTaskName, value, mainTaskName, employerName, index) => {
-    let call = "/subTaskProgress/?";
+    let call = "https://businessaide-backend.herokuapp.com/subTaskProgress/?";
     call = call + "subTaskName=" + subTaskName + "&";
     call = call + "value=" + value + "&";
     call = call + "mainTaskName=" + mainTaskName + "&";
@@ -159,7 +159,7 @@ useEffect (()=> {
   }
 
   const completeSubTask = async (subTaskName, mainTaskName, employerName) => {
-    let call = "/completeSubTask/?";
+    let call = "https://businessaide-backend.herokuapp.com/completeSubTask/?";
     call = call + "subTaskName=" + subTaskName + "&";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
@@ -167,7 +167,7 @@ useEffect (()=> {
   }
 
   const completeMainTask = async (mainTaskName, employerName) => {
-    let call = "/completeMainTask/?";
+    let call = "https://businessaide-backend.herokuapp.com/completeMainTask/?";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
     await (await fetch(call)).json();
