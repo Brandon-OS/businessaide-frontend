@@ -67,14 +67,14 @@ export default function BasicCard(props) {
     window.location.reload(false);
   }
   const mainTaskProgress = async (tasks, email) => {
-    let call1 = "/findUserType/?";
+    let call1 = "https://businessaide-backend.herokuapp.com/findUserType/?";
     call1 = call1 + "email=" + email;
     let result1 = await (await fetch(call1)).json();
     console.log(result1);
     //setUsertype(result.body);
     //setUsername(result.name);
     username = result1.name;
-    let call = "/mainTaskProgress/?";
+    let call = "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
     call = call + "tasks=" + tasks + "&";
     call = call + "employerName=" + username;
     let result = await (await fetch(call)).json();
@@ -107,7 +107,7 @@ export default function BasicCard(props) {
 
   useEffect(() => {
     const viewMainTask = async (mainTaskName, email) => {
-      let call1 = "/findUserType/?";
+      let call1 = "https://businessaide-backend.herokuapp.com/findUserType/?";
       call1 = call1 + "email=" + email;
       let result1 = await (await fetch(call1)).json();
       console.log(result1);
@@ -115,7 +115,7 @@ export default function BasicCard(props) {
       //setUsername(result.name);
       username = result1.name;
       viewMainTaskFeedback(mainTaskName, username);
-      let call = "/getMainTaskData/?";
+      let call = "https://businessaide-backend.herokuapp.com/getMainTaskData/?";
       call = call + "mainTaskName=" + mainTaskName + "&";
       call = call + "employerName=" + username;
       let result = await (await fetch(call)).json();
@@ -127,7 +127,8 @@ export default function BasicCard(props) {
       subtasktemp = result.body.subtasks;
       console.log(subtasktemp);
       for (let i = 0; i < subtasktemp.length; i++) {
-        let call = "/getSubTaskData/?";
+        let call =
+          "https://businessaide-backend.herokuapp.com/getSubTaskData/?";
         call = call + "subTaskName=" + subtasktemp[i] + "&";
         call = call + "mainTaskName=" + maintask + "&";
         call = call + "employerName=" + username;
@@ -148,7 +149,6 @@ export default function BasicCard(props) {
     if (user) {
       viewMainTask(maintask, user.email);
       mainTaskProgress(maintask, user.email);
-      viewMainTaskFeedback(maintask, username);
     }
   }, []);
 
@@ -191,7 +191,8 @@ export default function BasicCard(props) {
   }, [progress]);
 
   const viewMainTaskFeedback = async (mainTaskName, employerName) => {
-    let call = "/viewMainTaskFeedback/?";
+    let call =
+      "https://businessaide-backend.herokuapp.com/viewMainTaskFeedback/?";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
     let result = await (await fetch(call)).json();
@@ -207,7 +208,7 @@ export default function BasicCard(props) {
     employerName,
     index
   ) => {
-    let call = "/subTaskProgress/?";
+    let call = "https://businessaide-backend.herokuapp.com/subTaskProgress/?";
     call = call + "subTaskName=" + subTaskName + "&";
     call = call + "value=" + value + "&";
     call = call + "mainTaskName=" + mainTaskName + "&";
@@ -218,7 +219,7 @@ export default function BasicCard(props) {
   };
 
   const completeSubTask = async (subTaskName, mainTaskName, employerName) => {
-    let call = "/completeSubTask/?";
+    let call = "https://businessaide-backend.herokuapp.com/completeSubTask/?";
     call = call + "subTaskName=" + subTaskName + "&";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
@@ -226,7 +227,7 @@ export default function BasicCard(props) {
   };
 
   const completeMainTask = async (mainTaskName, employerName) => {
-    let call = "/completeMainTask/?";
+    let call = "https://businessaide-backend.herokuapp.com/completeMainTask/?";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
     await (await fetch(call)).json();

@@ -42,12 +42,13 @@ const EmployeesList = ({ getEmployeeId }) => {
   }, []);
   const getEmployees = async () => {
     if (user) {
-      let call1 = "/findUserType/?";
+      let call1 = "https://businessaide-backend.herokuapp.com/findUserType/?";
       console.log(user.email);
       call1 = call1 + "email=" + user.email;
       let result = await (await fetch(call1)).json();
       console.log(result.name);
-      let call = "/getAllEmployeeSalary/?";
+      let call =
+        "https://businessaide-backend.herokuapp.com/getAllEmployeeSalary/?";
       setName(result.name);
       call = call + "employerName=" + result.name;
       let returned = await (await fetch(call)).json();

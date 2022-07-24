@@ -36,7 +36,8 @@ export default function Employeetasklist() {
 
   var task = [];
   const displayTask = async (employeeName, employerName) => {
-    let call = "/displayEmployeeTask/?";
+    let call =
+      "https://businessaide-backend.herokuapp.com/displayEmployeeTask/?";
     call = call + "employeeName=" + employeeName;
     let result = await (await fetch(call)).json();
     for (let i = 0; i < result.body.length; i++) {
@@ -48,7 +49,8 @@ export default function Employeetasklist() {
       //console.error(err)
     }
     for (let i = 0; i < task.length; i++) {
-      let calltask = "/mainTaskProgress/?";
+      let calltask =
+        "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
       calltask = calltask + "tasks=" + task[i] + "&";
       calltask = calltask + "employerName=" + employerName;
       let resulttask = await (await fetch(calltask)).json();

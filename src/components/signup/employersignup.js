@@ -56,7 +56,7 @@ const Styles = styled.div`
 
 const theme = createTheme();
 const Submit = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const { registerWithEmailAndPassword } = useAuth();
   const { signInWithGoogle } = useAuth();
   const [firstName, setFirstName] = useState("");
@@ -67,7 +67,7 @@ const Submit = () => {
   const [workExp, setWorkExp] = useState("");
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
-  const [phoneNum,setphoneNum] = useState("");
+  const [phoneNum, setphoneNum] = useState("");
   const [username, setName] = useState("");
   const [loginerror, setError] = useState("");
   const [password, setPassword] = useState(null);
@@ -79,62 +79,54 @@ const Submit = () => {
   //if (!username) alert("Please enter name");
   //registerWithEmailAndPassword(fullname, username, password);
   //};
-  async function register (event) {
-
+  async function register(event) {
     event.preventDefault();
-   
-    if (firstName=="") {
+
+    if (firstName == "") {
       return alert("Please enter a full name");
-    }
- 
-else if (username==="") {
-  alert("please enter an email")
-}
-    else if(password!==retypepassword) {
-      alert("passwords do not match")
-    }
-   
-    else{
-          // Create a new user with Firebase
-          let call = "/SendEmployer/?";
-          call = call + "firstName=" + firstName + "&";
-          call = call + "lastName=" + lastName + "&";
-          call = call + "secretCode=" + secretcode;
-          await registerWithEmailAndPassword(
-            firstName + " " + lastName,
-            username,
-            password
-          )
-            .then((userAuth) => {
-              // Update the newly created user with a display name and a picture
-              updateProfile(userAuth.user, {
-                displayName: firstName + " " + lastName,
-              })
-                .then(
-                  // Dispatch the user information for persistence in the redux state
-                  dispatch(
-                    login({
-                      email: userAuth.user.email,
-                      uid: userAuth.user.uid,
-                      displayName: firstName + " " + lastName,
-                    })
-                  )
-                )
-                .catch((error) => {
-                  console.log(error);
-                  setError(error);
-                });
-            })
-            .catch((err) => {
-              alert(err);
+    } else if (username === "") {
+      alert("please enter an email");
+    } else if (password !== retypepassword) {
+      alert("passwords do not match");
+    } else {
+      // Create a new user with Firebase
+      let call = "https://businessaide-backend.herokuapp.com/SendEmployer/?";
+      call = call + "firstName=" + firstName + "&";
+      call = call + "lastName=" + lastName + "&";
+      call = call + "secretCode=" + secretcode;
+      await registerWithEmailAndPassword(
+        firstName + " " + lastName,
+        username,
+        password
+      )
+        .then((userAuth) => {
+          // Update the newly created user with a display name and a picture
+          updateProfile(userAuth.user, {
+            displayName: firstName + " " + lastName,
+          })
+            .then(
+              // Dispatch the user information for persistence in the redux state
+              dispatch(
+                login({
+                  email: userAuth.user.email,
+                  uid: userAuth.user.uid,
+                  displayName: firstName + " " + lastName,
+                })
+              )
+            )
+            .catch((error) => {
+              console.log(error);
+              setError(error);
             });
-          navigate("/");
-          await (await fetch(call)).json();
-        }
-    
-  };
-    
-  
+        })
+        .catch((err) => {
+          alert(err);
+        });
+      navigate("/");
+      await (await fetch(call)).json();
+    }
+  }
+
   /* const schema = {
     username: Joi.string().required().email().label("Username"),
     password: Joi.string().required().min(5).label("Password"),
@@ -167,7 +159,14 @@ else if (username==="") {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" onSubmit={(e)=>{register(e);}} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={(e) => {
+              register(e);
+            }}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               value={firstName}
               margin="normal"
@@ -179,7 +178,7 @@ else if (username==="") {
               autoComplete="firstname"
               onChange={(e) => setFirstName(e.target.value)}
             />
-             <TextField
+            <TextField
               value={lastName}
               margin="normal"
               required
@@ -203,7 +202,7 @@ else if (username==="") {
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-             <TextField
+            <TextField
               value={secretcode}
               margin="normal"
               required
@@ -238,8 +237,8 @@ else if (username==="") {
               onChange={(e) => setRetypepassword(e.target.value)}
             />
             <Typography component="h3" variant="h5">
-            {loginerror}
-          </Typography>
+              {loginerror}
+            </Typography>
             <Button
               type="submit"
               fullWidth

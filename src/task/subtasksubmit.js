@@ -6,7 +6,7 @@ const subtaskSubmit = async (
   employerName,
   workerArray
 ) => {
-  let call = "/createSubTask/?";
+  let call = "https://businessaide-backend.herokuapp.com/createSubTask/?";
   call = call + "subTaskName=" + subTaskName + "&"; // do this for each parameter you want to send
   call = call + "subTaskDesc=" + subTaskDesc + "&";
   call = call + "goal=" + goal + "&";

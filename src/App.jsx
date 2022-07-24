@@ -23,7 +23,7 @@ import EmployeeBar from "./employees/employeenavbar";
 
 export default function App() {
   const FindUserType = async (email) => {
-    let call = "/findUserType/?";
+    let call = " https://businessaide-backend.herokuapp.com/findUserType/?";
     call = call + "email=" + email;
     let result = await (await fetch(call)).json();
     console.log(result);

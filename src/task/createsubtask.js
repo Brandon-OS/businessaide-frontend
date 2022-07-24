@@ -21,9 +21,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { useTheme } from '@mui/material/styles';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import { useTheme } from "@mui/material/styles";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import { useEffect } from "react";
 //import subtaskSubmit from "./subtasksubmit";
 
@@ -129,7 +129,7 @@ export default function CreateSubtask(props) {
     workerArray
   ) => {
     console.log(workerArray);
-    let call = "/createSubTask/?";
+    let call = "https://businessaide-backend.herokuapp.com/createSubTask/?";
     call = call + "subTaskName=" + subTaskName + "&"; // do this for each parameter you want to send
     call = call + "subTaskDesc=" + subTaskDesc + "&";
     call = call + "goal=" + goal + "&";

@@ -34,7 +34,7 @@ export default function FullScreenDialog(props) {
         onClick={handleClickOpen}
         style={{
           position: "absolute",
-          left: 650,
+          left: 700,
         }}
       >
         Open full-screen dialog

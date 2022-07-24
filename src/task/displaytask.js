@@ -42,14 +42,14 @@ export default function OutlinedCard() {
   var task = [];
   const { user } = useAuth();
   const FindUserType = async (email) => {
-    let call = "/findUserType/?";
+    let call = "https://businessaide-backend.herokuapp.com/findUserType/?";
     call = call + "email=" + email;
     let result = await (await fetch(call)).json();
     console.log(result);
     //setUsertype(result.body);
     //setUsername(result.name);
     username = result.name;
-    let call2 = "/displayTask/?";
+    let call2 = "https://businessaide-backend.herokuapp.com/displayTask/?";
     call2 = call2 + "employerName=" + username;
     let result2 = await (await fetch(call2)).json();
     for (let i = 0; i < result2.body.length; i++) {
@@ -61,7 +61,8 @@ export default function OutlinedCard() {
       //console.error(err)
     }
     for (let i = 0; i < task.length; i++) {
-      let calltask = "/mainTaskProgress/?";
+      let calltask =
+        "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
       calltask = calltask + "tasks=" + task[i] + "&";
       calltask = calltask + "employerName=" + username;
       let resulttask = await (await fetch(calltask)).json();
@@ -71,7 +72,7 @@ export default function OutlinedCard() {
   };
 
   const displayTask = async (employerName) => {
-    let call = "/displayTask/?";
+    let call = "https://businessaide-backend.herokuapp.com/displayTask/?";
     call = call + "employerName=" + employerName;
     let result = await (await fetch(call)).json();
     for (let i = 0; i < result.body.length; i++) {
@@ -83,7 +84,8 @@ export default function OutlinedCard() {
       //console.error(err)
     }
     for (let i = 0; i < task.length; i++) {
-      let calltask = "/mainTaskProgress/?";
+      let calltask =
+        "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
       calltask = calltask + "tasks=" + task[i] + "&";
       calltask = calltask + "employerName=" + employerName;
       let resulttask = await (await fetch(calltask)).json();
