@@ -29,10 +29,10 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-function Home(props) {
-  const refreshPage = () => {
+function Home() {
+  const refreshPage = ()=>{
     window.location.reload();
-  };
+ }
   const { signOutWithGoogle } = useAuth();
   const auth = getAuth();
   const [employeeId, setEmployeeId] = useState("");
@@ -62,7 +62,7 @@ function Home(props) {
               </Link>
             </Typography>
             <Button>
-              <Link
+            <Link
                 style={{ textDecoration: "none", color: "white" }}
                 to="/payroll/payroll"
               >
@@ -71,26 +71,11 @@ function Home(props) {
             </Button>
             <Button>
               <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/viewemployees"
-              >
-                Employees
-              </Link>
-            </Button>
-            <Button>
-              <Link
+                
                 style={{ textDecoration: "none", color: "white" }}
                 to="/task/displaytask"
               >
                 View Tasks
-              </Link>
-            </Button>
-            <Button>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/task/createtask"
-              >
-                Add Tasks
               </Link>
             </Button>
             <Button onClick={signOutWithGoogle} color="inherit">
@@ -107,19 +92,12 @@ function Home(props) {
         />
         <Route path="/Individual/:id" element={<Individual />} />
         <Route path="/task/displaytask" element={<OutlinedCard />} />
-        <Route
-          path="/task/singletask"
-          element={<BasicCard employName={props.name} />}
-        />
+        <Route path="/task/singletask" element={<BasicCard />} />
         <Route path="/task/createtask" element={<CreateTask />} />
-        <Route
-          path="/payroll/payroll"
-          element={<Showpayroll name={props.name} />}
-        />
+        <Route path="/payroll/payroll" element={<Showpayroll/>}/>
       </Routes>
     </div>
   );
 }
 
 export default Home;
-

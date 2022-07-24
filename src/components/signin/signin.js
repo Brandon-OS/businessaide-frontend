@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../useAuth";
-import Joi from "joi";
+
 import styled from "styled-components";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
@@ -15,7 +15,14 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  BrowserRouter,
+  useNavigate,
+} from "react-router-dom";
+
 const Styles = styled.div`
   background: lavender;
   padding: 20px;
@@ -43,7 +50,8 @@ const Styles = styled.div`
 `;
 const theme = createTheme();
 export function Signin() {
-  const { signInWithGoogle } = useAuth();
+  const { user } = useAuth();
+  let navigate = useNavigate();
   const { signin } = useAuth();
   const [username, setName] = useState("");
   const [password, setPassword] = useState(null);
@@ -81,7 +89,10 @@ export function Signin() {
           </Typography>
           <Box
             component="form"
-            onSubmit={(e) => signin(e, username, password)}
+            onSubmit={(e) => {
+              signin(e, username, password);
+              navigate("/");
+            }}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -109,10 +120,6 @@ export function Signin() {
               autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -121,14 +128,7 @@ export function Signin() {
             >
               Sign In
             </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={signInWithGoogle}
-            >
-              Sign in with Google
-            </Button>
+
             <Grid container>
               <Grid item xs></Grid>
               <Grid item></Grid>

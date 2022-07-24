@@ -5,18 +5,14 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ProgressBar from "./progressbar";
+import ProgressBar from "./employeeprogressbar";
 import { Grid } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Icon from "@mui/material/Icon";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import { Link } from "react-router-dom";
-import CreateTask from "./createtask";
-import CreateSubtask from "./createsubtask";
-import TaskDataService from "./taskserver";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useAuth } from "../useAuth";
 
 const bull = (
   <Box
@@ -25,54 +21,23 @@ const bull = (
   ></Box>
 );
 
-export default function OutlinedCard() {
+export default function Employeetasklist() {
   window.onload = function() {
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
     }
   };
-
   const [tasks, setTasks] = useState([]);
   const [progress, setProgress] = useState([]);
   const refreshPage = () => {
     window.location.reload();
   };
-  var username;
+
   var task = [];
-  const { user } = useAuth();
-  const FindUserType = async (email) => {
-    let call = "/findUserType/?";
-    call = call + "email=" + email;
-    let result = await (await fetch(call)).json();
-    console.log(result);
-    //setUsertype(result.body);
-    //setUsername(result.name);
-    username = result.name;
-    let call2 = "/displayTask/?";
-    call2 = call2 + "employerName=" + username;
-    let result2 = await (await fetch(call2)).json();
-    for (let i = 0; i < result2.body.length; i++) {
-      task[i] = result2.body[i];
-      setTasks((tasks) => [...tasks, result2.body[i]]);
-
-      //try {mainTaskProgress(task[i], "adam jerry" )
-      //} catch (err) {
-      //console.error(err)
-    }
-    for (let i = 0; i < task.length; i++) {
-      let calltask = "/mainTaskProgress/?";
-      calltask = calltask + "tasks=" + task[i] + "&";
-      calltask = calltask + "employerName=" + username;
-      let resulttask = await (await fetch(calltask)).json();
-      setProgress((progress) => [...progress, resulttask.body]);
-    }
-    console.log(progress);
-  };
-
-  const displayTask = async (employerName) => {
-    let call = "/displayTask/?";
-    call = call + "employerName=" + employerName;
+  const displayTask = async (employeeName, employerName) => {
+    let call = "/displayEmployeeTask/?";
+    call = call + "employeeName=" + employeeName;
     let result = await (await fetch(call)).json();
     for (let i = 0; i < result.body.length; i++) {
       task[i] = result.body[i];
@@ -101,9 +66,7 @@ export default function OutlinedCard() {
  */
 
   useEffect(() => {
-    if (user) {
-      FindUserType(user.email);
-    }
+    displayTask("chase potato", "adam jerry");
   }, []);
 
   //useEffect(() => {
@@ -134,11 +97,7 @@ export default function OutlinedCard() {
         container
         rowSpacing={20}
         columns={12}
-        columnSpacing={{
-          xs: 2,
-          sm: 2,
-          md: 3,
-        }}
+        columnSpacing={{ xs: 2, sm: 2, md: 3 }}
       >
         {tasks === [] ? (
           <h2>loading...</h2>
@@ -149,9 +108,7 @@ export default function OutlinedCard() {
                 <Card sx={{ maxWidth: 345 }}>
                   <CardContent>
                     <Typography
-                      sx={{
-                        fontSize: 20,
-                      }}
+                      sx={{ fontSize: 20 }}
                       color="text.secondary"
                       gutterBottom
                     >
@@ -173,22 +130,13 @@ export default function OutlinedCard() {
                   </CardContent>
                   <CardActions>
                     <Link
-                      to="/task/singletask"
+                      to="/employees/employeesingletask"
                       state={doc}
-                      style={{
-                        textDecoration: "none",
-                        color: "blue",
-                      }}
+                      style={{ textDecoration: "none", color: "blue" }}
                     >
                       View Task
                     </Link>
-                    <span
-                      style={{
-                        color: "white",
-                      }}
-                    >
-                      hahahaha
-                    </span>
+                    <span style={{ color: "white" }}>hahahaha</span>
                   </CardActions>
                 </Card>
               </Grid>

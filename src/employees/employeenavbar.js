@@ -1,8 +1,6 @@
 import { Component } from "react";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../useAuth";
 import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
-import SignInUser from "./components/signin/signin.js";
-import CreateForm from "./components/signup/employeesignup.js";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -11,15 +9,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import EmployeesList from "./viewemployees";
-import Welcome from "./Welcome";
+import Welcome from "../Welcome";
 import { useState, useEffect } from "react";
-import Individual from "./Individual";
-import EmployeeDataService from "./employeeserver";
-import OutlinedCard from "./task/displaytask";
-import BasicCard from "./task/singletask";
-import CreateTask from "./task/createtask";
-import Showpayroll from "./payroll/payroll";
+import Employeesingletask from "./employeesingletask";
+import Employeetasklist from "./employeedisplaytask";
+import Salary from "./salary";
 import {
   getAuth,
   signInWithPopup,
@@ -29,7 +23,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-function Home(props) {
+function EmployeeBar(props) {
+  console.log(props.name);
   const refreshPage = () => {
     window.location.reload();
   };
@@ -64,7 +59,7 @@ function Home(props) {
             <Button>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
-                to="/payroll/payroll"
+                to="/employees/salary"
               >
                 Payroll
               </Link>
@@ -72,25 +67,9 @@ function Home(props) {
             <Button>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
-                to="/viewemployees"
-              >
-                Employees
-              </Link>
-            </Button>
-            <Button>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/task/displaytask"
+                to="/employees/employeedisplaytask"
               >
                 View Tasks
-              </Link>
-            </Button>
-            <Button>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/task/createtask"
-              >
-                Add Tasks
               </Link>
             </Button>
             <Button onClick={signOutWithGoogle} color="inherit">
@@ -102,24 +81,20 @@ function Home(props) {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route
-          path="/viewemployees/*"
-          element={<EmployeesList getEmployeeId={getEmployeeIdHandler} />}
+          path="/employees/employeedisplaytask"
+          element={<Employeetasklist />}
         />
-        <Route path="/Individual/:id" element={<Individual />} />
-        <Route path="/task/displaytask" element={<OutlinedCard />} />
         <Route
-          path="/task/singletask"
-          element={<BasicCard employName={props.name} />}
+          path="/employees/employeesingletask"
+          element={<Employeesingletask />}
         />
-        <Route path="/task/createtask" element={<CreateTask />} />
         <Route
-          path="/payroll/payroll"
-          element={<Showpayroll name={props.name} />}
+          path="/employees/salary"
+          element={<Salary name={props.name} />}
         />
       </Routes>
     </div>
   );
 }
 
-export default Home;
-
+export default EmployeeBar;

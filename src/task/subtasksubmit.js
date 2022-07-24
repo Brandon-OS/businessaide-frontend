@@ -6,13 +6,14 @@ const subtaskSubmit = async (
   employerName,
   workerArray
 ) => {
-  let call = "https://businessaide-backend.herokuapp.com/createSubTask/?";
+  let call = "/createSubTask/?";
   call = call + "subTaskName=" + subTaskName + "&"; // do this for each parameter you want to send
   call = call + "subTaskDesc=" + subTaskDesc + "&";
   call = call + "goal=" + goal + "&";
   call = call + "mainTaskName=" + mainTaskName + "&";
   call = call + "employerName=" + employerName + "&";
   call = call + "workerArray=" + workerArray;
-  await (await fetch(call)).json();
+  let result = await (await fetch(call)).json();
+  return result;
 };
 export default subtaskSubmit;
