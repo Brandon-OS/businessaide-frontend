@@ -1,15 +1,15 @@
 {
-  "main.css": "/businessaide-frontend/static/css/main.5be49e70.chunk.css",
-  "main.js": "/businessaide-frontend/static/js/main.0423ff58.chunk.js",
-  "main.js.map": "/businessaide-frontend/static/js/main.0423ff58.chunk.js.map",
-  "runtime~main.js": "/businessaide-frontend/static/js/runtime~main.87be0614.js",
-  "runtime~main.js.map": "/businessaide-frontend/static/js/runtime~main.87be0614.js.map",
-  "static/js/2.88ef2454.chunk.js": "/businessaide-frontend/static/js/2.88ef2454.chunk.js",
-  "static/js/2.88ef2454.chunk.js.map": "/businessaide-frontend/static/js/2.88ef2454.chunk.js.map",
-  "static/js/3.d550f5e9.chunk.js": "/businessaide-frontend/static/js/3.d550f5e9.chunk.js",
-  "static/js/3.d550f5e9.chunk.js.map": "/businessaide-frontend/static/js/3.d550f5e9.chunk.js.map",
+  "main.css": "/businessaide-frontend/static/css/main.799a790d.chunk.css",
+  "main.js": "/businessaide-frontend/static/js/main.e89341e0.chunk.js",
+  "main.js.map": "/businessaide-frontend/static/js/main.e89341e0.chunk.js.map",
+  "runtime~main.js": "/businessaide-frontend/static/js/runtime~main.39f086e2.js",
+  "runtime~main.js.map": "/businessaide-frontend/static/js/runtime~main.39f086e2.js.map",
+  "static/js/2.9c9dcebf.chunk.js": "/businessaide-frontend/static/js/2.9c9dcebf.chunk.js",
+  "static/js/2.9c9dcebf.chunk.js.map": "/businessaide-frontend/static/js/2.9c9dcebf.chunk.js.map",
+  "static/js/3.85b4c877.chunk.js": "/businessaide-frontend/static/js/3.85b4c877.chunk.js",
+  "static/js/3.85b4c877.chunk.js.map": "/businessaide-frontend/static/js/3.85b4c877.chunk.js.map",
   "index.html": "/businessaide-frontend/index.html",
-  "precache-manifest.c3f32ab78ced4fe79d85f0f36dae92e2.js": "/businessaide-frontend/precache-manifest.c3f32ab78ced4fe79d85f0f36dae92e2.js",
+  "precache-manifest.d0f73d2018380b0660d5d8e062bba42a.js": "/businessaide-frontend/precache-manifest.d0f73d2018380b0660d5d8e062bba42a.js",
   "service-worker.js": "/businessaide-frontend/service-worker.js",
-  "static/css/main.5be49e70.chunk.css.map": "/businessaide-frontend/static/css/main.5be49e70.chunk.css.map"
+  "static/css/main.799a790d.chunk.css.map": "/businessaide-frontend/static/css/main.799a790d.chunk.css.map"
 }
