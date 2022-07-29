@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "46d0d2ab6e15556c7b5a",
+    "revision": "5f29f75b6c019fa5106d",
     "url": "/businessaide-frontend/static/css/main.799a790d.chunk.css"
   },
   {
-    "revision": "46d0d2ab6e15556c7b5a",
-    "url": "/businessaide-frontend/static/js/main.ff1dc283.chunk.js"
+    "revision": "5f29f75b6c019fa5106d",
+    "url": "/businessaide-frontend/static/js/main.a3f0f90d.chunk.js"
   },
   {
     "revision": "7e041ea6991c91eb4a90",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/businessaide-frontend/static/js/3.85b4c877.chunk.js"
   },
   {
-    "revision": "3cad481f2a3d8d83e777e900d1f388f1",
+    "revision": "ce4519618201db94764ff33819bd5165",
     "url": "/businessaide-frontend/index.html"
   }
 ];
