@@ -1,15 +1,15 @@
 {
-  "main.css": "/businessaide-frontend/static/css/main.5215e946.chunk.css",
-  "main.js": "/businessaide-frontend/static/js/main.62790620.chunk.js",
-  "main.js.map": "/businessaide-frontend/static/js/main.62790620.chunk.js.map",
-  "runtime~main.js": "/businessaide-frontend/static/js/runtime~main.6105fda2.js",
-  "runtime~main.js.map": "/businessaide-frontend/static/js/runtime~main.6105fda2.js.map",
-  "static/js/2.bbbbcc61.chunk.js": "/businessaide-frontend/static/js/2.bbbbcc61.chunk.js",
-  "static/js/2.bbbbcc61.chunk.js.map": "/businessaide-frontend/static/js/2.bbbbcc61.chunk.js.map",
-  "static/js/3.3e1221af.chunk.js": "/businessaide-frontend/static/js/3.3e1221af.chunk.js",
-  "static/js/3.3e1221af.chunk.js.map": "/businessaide-frontend/static/js/3.3e1221af.chunk.js.map",
-  "index.html": "/businessaide-frontend/index.html",
-  "precache-manifest.15a369b0c899d983a932702c2612e8cc.js": "/businessaide-frontend/precache-manifest.15a369b0c899d983a932702c2612e8cc.js",
-  "service-worker.js": "/businessaide-frontend/service-worker.js",
-  "static/css/main.5215e946.chunk.css.map": "/businessaide-frontend/static/css/main.5215e946.chunk.css.map"
+  "main.css": "/static/css/main.5215e946.chunk.css",
+  "main.js": "/static/js/main.62790620.chunk.js",
+  "main.js.map": "/static/js/main.62790620.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.bfafc768.js",
+  "runtime~main.js.map": "/static/js/runtime~main.bfafc768.js.map",
+  "static/js/2.9119cd21.chunk.js": "/static/js/2.9119cd21.chunk.js",
+  "static/js/2.9119cd21.chunk.js.map": "/static/js/2.9119cd21.chunk.js.map",
+  "static/js/3.3e1221af.chunk.js": "/static/js/3.3e1221af.chunk.js",
+  "static/js/3.3e1221af.chunk.js.map": "/static/js/3.3e1221af.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.f523afa5f4110c719f3c4941ca974d28.js": "/precache-manifest.f523afa5f4110c719f3c4941ca974d28.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/main.5215e946.chunk.css.map": "/static/css/main.5215e946.chunk.css.map"
 }
