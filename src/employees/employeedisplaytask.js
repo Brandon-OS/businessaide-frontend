@@ -42,7 +42,7 @@ export default function Employeetasklist() {
   var task = [];
   var employer;
   const displayTask = async (email) => {
-    let call1 = "/findUserType/?";
+    let call1 = "https://businessaide-backend.herokuapp.com/findUserType/?";
     call1 = call1 + "email=" + email;
     let result1 = await (await fetch(call1)).json();
     console.log(result1);
