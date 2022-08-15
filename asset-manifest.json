@@ -1,7 +1,7 @@
 {
   "main.css": "/businessaide-frontend/static/css/main.5215e946.chunk.css",
-  "main.js": "/businessaide-frontend/static/js/main.c2e88925.chunk.js",
-  "main.js.map": "/businessaide-frontend/static/js/main.c2e88925.chunk.js.map",
+  "main.js": "/businessaide-frontend/static/js/main.f53455ef.chunk.js",
+  "main.js.map": "/businessaide-frontend/static/js/main.f53455ef.chunk.js.map",
   "runtime~main.js": "/businessaide-frontend/static/js/runtime~main.bc662ed6.js",
   "runtime~main.js.map": "/businessaide-frontend/static/js/runtime~main.bc662ed6.js.map",
   "static/js/2.a3f0997d.chunk.js": "/businessaide-frontend/static/js/2.a3f0997d.chunk.js",
@@ -9,7 +9,7 @@
   "static/js/3.6245d430.chunk.js": "/businessaide-frontend/static/js/3.6245d430.chunk.js",
   "static/js/3.6245d430.chunk.js.map": "/businessaide-frontend/static/js/3.6245d430.chunk.js.map",
   "index.html": "/businessaide-frontend/index.html",
-  "precache-manifest.97629c674d8c8cd5c68690199874148b.js": "/businessaide-frontend/precache-manifest.97629c674d8c8cd5c68690199874148b.js",
+  "precache-manifest.e8533bd4741ae8c5b55c34139a94706c.js": "/businessaide-frontend/precache-manifest.e8533bd4741ae8c5b55c34139a94706c.js",
   "service-worker.js": "/businessaide-frontend/service-worker.js",
   "static/css/main.5215e946.chunk.css.map": "/businessaide-frontend/static/css/main.5215e946.chunk.css.map"
 }
