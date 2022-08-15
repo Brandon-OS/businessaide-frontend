@@ -21,11 +21,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import { useTheme } from '@mui/material/styles';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { useEffect } from "react";
 import { useAuth } from "../useAuth";
+import { Stack } from "@mui/material";
 //import subtaskSubmit from "./subtasksubmit";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -120,11 +121,11 @@ export default function CreateSubtask({
   const [open, setOpen] = React.useState(false);
   const [task, setTask] = useState();
   const [description, setDescription] = useState();
-  const [goal, setGoal] = useState();
+  const [goal, setGoal] = useState(1);
   const [employername, setEmployername] = useState();
   const { user } = useAuth();
   const FindUserType = async (email) => {
-    let call = "/findUserType/?";
+    let call = "https://businessaide-backend.herokuapp.com/findUserType/?";
     call = call + "email=" + email;
     let result = await (await fetch(call)).json();
     console.log(result);
@@ -160,6 +161,7 @@ export default function CreateSubtask({
     call = call + "employerName=" + employerName + "&";
     call = call + "workerArray=" + workerArray;
     let result = await (await fetch(call)).json();
+    alert(result.reason);
     setFeedback(result);
     localerror = result;
   };
@@ -170,16 +172,15 @@ export default function CreateSubtask({
   return (
     <div>
       <span style={{ color: "white" }}> hahahahahahaa </span>
+      <Stack direction="row" justifyContent="center">
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        style={{
-          position: "absolute",
-          left: 633,
-        }}
+      
       >
         New Subtask
       </Button>
+      </Stack>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -249,18 +250,21 @@ export default function CreateSubtask({
                 inputProps: { min: 1 },
               }}
               value={goal}
-              type="number"
               margin="normal"
+              type="number"
+              min="1"
               required
               fullWidth
               name="goal"
-              label="Task Goal"
+              label="Task Goal (please enter a positive integer)"
               id="goal"
-              onChange={(e) =>
-                e.target.value > 0
-                  ? setGoal(e.target.value)
-                  : alert("please enter a positive integer")
-              }
+              onChange={(e) => {
+                if (!isNaN(e.target.value)) {
+                  setGoal(Number(e.target.value));
+                } else {
+                  alert("please enter a positive integer");
+                }
+              }}
             />
           </Box>
         </DialogContent>
@@ -271,9 +275,9 @@ export default function CreateSubtask({
               personName.length == 0 ||
               task == undefined ||
               description == undefined ||
-              goal === undefined ||
+              goal <= 0 ||
               employername === undefined
-                ? alert("please complete all required fields")
+                ? alert("please complete all required fields correctly")
                 : subtaskSubmit(
                     task,
                     description,

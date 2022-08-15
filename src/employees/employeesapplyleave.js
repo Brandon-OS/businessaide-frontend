@@ -21,7 +21,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import handleSubmit from "./handlesubmit";
 import { Card } from "@mui/material";
 import { CardContent } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -29,8 +28,8 @@ import { useEffect } from "react";
 import EmployeeDataService from "../employeeserver";
 import { useAuth } from "../useAuth";
 import MenuItem from "@mui/material/MenuItem";
-
 import Select from "@mui/material/Select";
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -70,11 +69,15 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function CreateTask() {
-  const [employees, setEmployees] = useState([]);
+export default function ApplyLeave() {
+  const [employeename, setEmployeename] = useState([]);
   const theme = useTheme();
   const [employername, setEmployername] = useState();
   const { user } = useAuth();
+  const [leaves, setLeave] = useState();
+ // const SendLeave = async (employername, employeename, start, end , reason) {
+    
+  //}
   const FindUserType = async (email) => {
     let call = "https://businessaide-backend.herokuapp.com/findUserType/?";
     call = call + "email=" + email;
@@ -82,10 +85,39 @@ export default function CreateTask() {
     console.log(result);
     //setUsertype(result.body);
     //setUsername(result.name);
-    setEmployername(result.name);
-    let employerreturned = result.name;
-    getEmployees(employerreturned);
+    setEmployeename(result.name);
+    let call2 = "https://businessaide-backend.herokuapp.com/getEmployerName/?";
+    call2 = call2 + "employeeName=" + result.name;
+    let result2 = await (await fetch(call2)).json();
+    setEmployername(result2.employerName);
+    const data = await EmployeeDataService.getEmployee(result.name);
+    console.log(data);
+    setLeave(data._document.data.value.mapValue.fields.leaveQuota.stringValue);
   };
+
+
+  
+   
+   
+
+  
+
+  const applyForLeave = async (employeeName, employerName, startdate, enddate, duration, reason, leaves) =>{
+    if (Number(duration) > leaves ) {
+alert("You do not have enough leaves available!")
+    }
+    else {
+    let call = "https://businessaide-backend.herokuapp.com/applyForLeave/?";
+    call = call + "employeeName=" + employeeName + "&";
+    call = call + "employerName=" + employerName + "&";
+    call = call + "startdate=" + startdate + "&";
+    call = call + "enddate=" + enddate + "&";
+    call = call + "duration=" + duration + "&";
+    call = call + "reason=" + reason;
+    let result = await (await fetch(call)).json();
+    alert (result.reason);
+    }
+  }
   useEffect(() => {
     if (user) {
       FindUserType(user.email);
@@ -102,30 +134,14 @@ export default function CreateTask() {
       },
     },
   };
-
-  const names = employees.map(function(employee) {
-    return employee.name;
-  });
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-  const getEmployees = async (employer) => {
-    let calltask = "https://businessaide-backend.herokuapp.com/getAllEmployeeSalary/?";
-    calltask = calltask + "employerName=" + employer;
-    let callresult = await (await fetch(calltask)).json();
-    console.log(callresult.body);
-    setEmployees(callresult.body);
-  };
+  const [remaining, setRemaining] = useState(20);
   const [personName, setPersonName] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [task, setTask] = useState();
-  const [people, setPeople] = useState();
-  const [description, setDescription] = useState();
+  const [reason, setReason] = useState();
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
+  const [duration, setDuration] = useState();
   const [employer, setEmployer] = useState([]);
   const handleChange = (event) => {
     const {
@@ -148,11 +164,11 @@ export default function CreateTask() {
       <Card>
         <CardContent>
           <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-            Add New Task
+            Apply Leave
           </Typography>
           <Typography variant="body2">
             <Button variant="outlined" onClick={handleClickOpen}>
-              New Task
+              New Leave
             </Button>
             <BootstrapDialog
               onClose={handleClose}
@@ -163,95 +179,95 @@ export default function CreateTask() {
                 id="customized-dialog-title"
                 onClose={handleClose}
               >
-                Create a New Task
+                Apply for Leave
               </BootstrapDialogTitle>
               <DialogContent dividers>
                 <Box component="form" onSubmit noValidate sx={{ mt: 1 }}>
-                  <TextField
-                    value={task}
+                  
+                <TextField
+                    value={leaves ? leaves:"loading..."}
                     margin="normal"
                     required
                     fullWidth
-                    id="task"
-                    label="Task Name"
-                    name="task"
-                    autoComplete="task"
+                    id="remaining"
+                    label="Available Leaves"
+                    name="remaining"
+                    autoComplete="remaining"
                     autoFocus
-                    onChange={(e) => setTask(e.target.value)}
+                    disabled
                   />
                   <TextField
-                    value={description}
+                    value={reason}
                     margin="normal"
                     required
                     fullWidth
-                    id="description"
-                    label="Task Description"
-                    name="description"
-                    autoComplete="description"
+                    id="leave reason"
+                    label="Leave reason"
+                    name="leave reason"
+                    autoComplete="leave reason"
                     autoFocus
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => setReason(e.target.value)}
                   />
-                  {console.log(employees)}
-                  <FormControl
+                  <TextField
+                    value={start}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    type="date"
                     required
-                    fullwidth
-                    sx={{
-                      ml: 0,
-                      mt: 2,
-                      width: 568,
-                    }}
-                  >
-                    <InputLabel id="demo-multiple-name-label">
-                      Employees Assigned
-                    </InputLabel>
-                    <Select
-                      labelId="demo-multiple-name-label"
-                      id="demo-multiple-name"
-                      multiple
-                      value={personName}
-                      onChange={handleChange}
-                      input={<OutlinedInput label="Name" />}
-                      MenuProps={MenuProps}
-                    >
-                      {names.length != 0 ? (
-                        names.map((name) => (
-                          <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
-                          >
-                            {name}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <div>loading...</div>
-                      )}
-                    </Select>
-                  </FormControl>
-                  {console.log(personName)}
+                    fullWidth
+                    id="leave start date"
+                    label="Leave Start Date"
+                    name="leave start date"
+                    autoComplete="leave starting date"
+                    autoFocus
+                    onChange={(e) => setStart(e.target.value)}
+                  />
+                  <TextField
+                    value={end}
+                    InputLabelProps={{ shrink: true }}
+                    margin="normal"
+                    type="date"
+                    required
+                    fullWidth
+                    id="leave end date"
+                    label="Leave End Date"
+                    name="leave end date"
+                    autoComplete="leave end date"
+                    autoFocus
+                    onChange={(e) => setEnd(e.target.value)}
+                  />
+                  <TextField
+                    value={duration}
+                    margin="normal"
+                    type="duration"
+                    required
+                    fullWidth
+                    id="duration"
+                    label="duration"
+                    name="duration"
+                    autoComplete="duration"
+                    autoFocus
+                    onChange={(e) => setDuration(e.target.value)}
+                  />
                 </Box>
               </DialogContent>
               <DialogActions>
                 <Button
                   autoFocus
                   onClick={() => {
-                    console.log(personName);
-                    console.log(task);
-                    personName.length == 0 ||
-                    task === undefined ||
-                    description === undefined ||
-                    employername === undefined
+                    start === undefined ||
+                    end === undefined ||
+                    employeename === undefined ||
+                    employeename === undefined ||
+                    
+                    reason === undefined 
                       ? alert("please complete all required fields")
-                      : handleSubmit(
-                          task,
-                          description,
-                          employername,
-                          personName
-                        );
+                      : leaves === undefined ? alert("please wait for available leaves information to load"): applyForLeave(employeename, employername, start, end, duration, reason,leaves)
+                      
                     handleClose();
                   }}
                 >
-                  Create Task
+                 Apply Leave
                 </Button>
               </DialogActions>
             </BootstrapDialog>

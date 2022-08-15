@@ -27,6 +27,7 @@ import handleSubmit from "./handlesubmit";
 import { Divider, Grid, List, ListItem, TextField } from "@mui/material";
 import CreateSubtask from "./createsubtask";
 import FullScreenDialog from "./viewfeedback";
+import { Stack } from "@mui/material";
 
 const auth = getAuth();
 const user = auth.currentUser;
@@ -160,15 +161,14 @@ export default function BasicCard(props) {
     }
   }, [isUpdated]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log(mainprogress);
     console.log(mainworkers);
   }, [mainprogress, mainworkers]);
-
   useEffect(() => {
     console.log(goal);
   }, [goal]);
-
+*/
   /*useEffect(() => {
     const viewSubTask = async (subTaskName, mainTaskName, employerName) => {
       let call = "/getSubTaskData/?";
@@ -184,6 +184,7 @@ export default function BasicCard(props) {
       setProgress((progress) => [...progress, result.progress]);
       setStatus((status) => [...status, result.status]);
       
+      
     };
    // for (let i = 0; i < subtasks.length; i++) {
      // viewSubTask(subtasks[i],maintask,"adam jerry")
@@ -193,14 +194,13 @@ export default function BasicCard(props) {
     
   }, [maintask, subtasks]);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     //progresstemp = progress;
     console.log(progress);
   }, [progress]);
-
+*/
   const viewMainTaskFeedback = async (mainTaskName, employerName) => {
-    let call =
-      "https://businessaide-backend.herokuapp.com/viewMainTaskFeedback/?";
+    let call = "https://businessaide-backend.herokuapp.com/viewMainTaskFeedback/?";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
     let result = await (await fetch(call)).json();
@@ -221,8 +221,8 @@ export default function BasicCard(props) {
     call = call + "value=" + value + "&";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
-    await (await fetch(call)).json();
-
+    let result = await (await fetch(call)).json();
+    alert(result.reason);
     //setProgress(progress[index]+1);
   };
 
@@ -309,19 +309,19 @@ export default function BasicCard(props) {
           <div>loading...</div>
         ) : (
           <div>
-            <List>
-              <ListItem>
+              <Stack direction="row" justifyContent="center">
                 <CreateSubtask
                   setIsupdated={setIsupdated}
                   isUpdated={isUpdated}
                   maintask={maintask}
                   people={mainworkers}
                 />
-              </ListItem>
-              <ListItem>
+                </Stack>
+              
+                <Stack direction="row" justifyContent="center">
                 <FullScreenDialog feedback={feedback} />
-              </ListItem>
-            </List>
+                </Stack>
+             
           </div>
         )}
         <div style={{ color: "white" }}>hahahah</div>
@@ -363,7 +363,11 @@ export default function BasicCard(props) {
                         label="Increase New Progress by"
                         autoFocus
                         onChange={(e) => {
-                          setnewValue(e.target.value);
+                          if (!isNaN(e.target.value)) {
+                            setnewValue(e.target.value);
+                          } else {
+                            alert("please enter a number");
+                          }
                         }}
                       />
 

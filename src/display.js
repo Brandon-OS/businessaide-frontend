@@ -1,6 +1,12 @@
 import { Component } from "react";
 import { useAuth } from "./useAuth";
-import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  BrowserRouter,
+  useNavigate,
+} from "react-router-dom";
 import SignInUser from "./components/signin/signin.js";
 import CreateForm from "./components/signup/employeesignup.js";
 import * as React from "react";
@@ -20,6 +26,7 @@ import OutlinedCard from "./task/displaytask";
 import BasicCard from "./task/singletask";
 import CreateTask from "./task/createtask";
 import Showpayroll from "./payroll/payroll";
+import ViewApprovedLeave from "./viewapprovedleave";
 import {
   getAuth,
   signInWithPopup,
@@ -28,6 +35,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import ViewLeave from "./viewleave"
+import ViewRejectedLeave from "./viewrejectedleave";
 
 function Home(props) {
   const refreshPage = () => {
@@ -35,6 +44,7 @@ function Home(props) {
   };
   const { signOutWithGoogle } = useAuth();
   const auth = getAuth();
+  let nav = useNavigate();
   const [employeeId, setEmployeeId] = useState("");
 
   const getEmployeeIdHandler = (id) => {
@@ -52,6 +62,30 @@ function Home(props) {
                 BusinessAide
               </Link>
             </Typography>
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/viewapprovedleave"
+              >
+                View Approved Leaves
+              </Link>
+              </Button>
+              <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/viewrejectedleave"
+              >
+                View Rejected Leaves
+              </Link>
+              </Button>
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/viewleave"
+              >
+                View Pending Leaves
+              </Link>
+            </Button>
             <Button>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
@@ -85,7 +119,10 @@ function Home(props) {
               </Link>
             </Button>
             <Button
-              onClick={signOutWithGoogle}
+              onClick={() => {
+                signOutWithGoogle();
+                nav("/");
+              }}
               variant="outlined"
               sx={{
                 color: "yellow",
@@ -103,6 +140,18 @@ function Home(props) {
         <Route
           path="/viewemployees/*"
           element={<EmployeesList getEmployeeId={getEmployeeIdHandler} />}
+        />
+         <Route
+          path="/viewrejectedleave"
+          element={<ViewRejectedLeave />}
+        />
+        <Route
+          path="/viewleave"
+          element={<ViewLeave />}
+        />
+        <Route
+          path="/viewapprovedleave"
+          element={<ViewApprovedLeave />}
         />
         <Route path="/Individual/:id" element={<Individual />} />
         <Route path="/task/displaytask" element={<OutlinedCard />} />

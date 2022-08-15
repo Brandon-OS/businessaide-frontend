@@ -56,7 +56,7 @@ const Styles = styled.div`
 
 const theme = createTheme();
 const Submit = () => {
-  const { user } = useAuth();
+  const {user} = useAuth();
   const { registerWithEmailAndPassword } = useAuth();
   const { signInWithGoogle } = useAuth();
   const [firstName, setFirstName] = useState("");
@@ -67,7 +67,7 @@ const Submit = () => {
   const [workExp, setWorkExp] = useState("");
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
-  const [phoneNum, setphoneNum] = useState("");
+  const [phoneNum,setphoneNum] = useState("");
   const [username, setName] = useState("");
   const [loginerror, setError] = useState("");
   const [password, setPassword] = useState(null);
@@ -79,57 +79,65 @@ const Submit = () => {
   //if (!username) alert("Please enter name");
   //registerWithEmailAndPassword(fullname, username, password);
   //};
-  const { signOutWithGoogle } = useAuth();
-  async function register(event) {
-    event.preventDefault();
+   const { signOutWithGoogle } = useAuth();
+   async function register(event) {
+     event.preventDefault();
 
-    if (firstName == "") {
-      return alert("Please enter a full name");
-    } else if (username === "") {
-      alert("please enter an email");
-    } else if (password !== retypepassword) {
-      alert("passwords do not match");
-    } else {
-      // Create a new user with Firebase
-      let call = "https://businessaide-backend.herokuapp.com/SendEmployer/?";
-      call = call + "firstName=" + firstName + "&";
-      call = call + "lastName=" + lastName + "&";
-      call = call + "secretCode=" + secretcode;
-      await registerWithEmailAndPassword(
-        firstName + " " + lastName,
-        username,
-        password
-      )
-        .then((userAuth) => {
-          // Update the newly created user with a display name and a picture
-          updateProfile(userAuth.user, {
-            displayName: firstName + " " + lastName,
-          })
-            .then(
-              // Dispatch the user information for persistence in the redux state
-              dispatch(
-                login({
-                  email: userAuth.user.email,
-                  uid: userAuth.user.uid,
-                  displayName: firstName + " " + lastName,
-                })
-              )
-            )
-            .catch((error) => {
-              console.log(error);
-              setError(error);
-            });
-        })
-        .catch((err) => {
-          // alert(err);
-        })
-        .then(signOutWithGoogle);
-      navigate("/");
-      await (await fetch(call)).json();
-    }
-  }
+     if (firstName == "") {
+       return alert("Please enter a full name");
+     } else if (username === "") {
+       alert("please enter an email");
+     } else if (password !== retypepassword) {
+       alert("passwords do not match");
+     } else if (password.length < 6) {
+       alert("password must contain at least 6 characters/digits");
+     } else {
+       // Create a new user with Firebase
+       let call = "https://businessaide-backend.herokuapp.com/SendEmployer/?";
+       call = call + "firstName=" + firstName + "&";
+       call = call + "lastName=" + lastName + "&";
+       call = call + "secretCode=" + secretcode;
+       let result = await (await fetch(call)).json();
+       if (result.status == "error") {
+        alert(result.reason);
+        return 0;
+       }
+       await registerWithEmailAndPassword(
+         firstName + " " + lastName,
+         username,
+         password
+       )
+         .then((userAuth) => {
+           // Update the newly created user with a display name and a picture
+           updateProfile(userAuth.user, {
+             displayName: firstName + " " + lastName,
+           })
+             .then(
+               // Dispatch the user information for persistence in the redux state
+               dispatch(
+                 login({
+                   email: userAuth.user.email,
+                   uid: userAuth.user.uid,
+                   displayName: firstName + " " + lastName,
+                 })
+               )
+             )
+             .catch((error) => {
+               console.log(error);
+               setError(error);
+             });
+         })
+         .catch((err) => {
+           // alert(err);
+         })
+         .then(signOutWithGoogle);
+       navigate("/");
+      
 
-  /* const schema = {
+     }
+   }
+
+   /* const schema = {
     username: Joi.string().required().email().label("Username"),
     password: Joi.string().required().min(5).label("Password"),
     name: Joi.string().required().label("Name"),
@@ -143,122 +151,122 @@ const Submit = () => {
     data[input.name] = input.value;
     this.setState({ data, errors });
   }; */
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={(e) => {
-              register(e);
-            }}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              value={firstName}
-              margin="normal"
-              required
-              fullWidth
-              name="firstname"
-              label="Firstname"
-              id="firstname"
-              autoComplete="firstname"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <TextField
-              value={lastName}
-              margin="normal"
-              required
-              fullWidth
-              name="lastname"
-              label="Lastname"
-              id="lastname"
-              autoComplete="lastname"
-              onChange={(e) => setLastName(e.target.value)}
-            />
+   return (
+     <ThemeProvider theme={theme}>
+       <Container component="main" maxWidth="xs">
+         <CssBaseline />
+         <Box
+           sx={{
+             marginTop: 8,
+             display: "flex",
+             flexDirection: "column",
+             alignItems: "center",
+           }}
+         >
+           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+             <LockOutlinedIcon />
+           </Avatar>
+           <Typography component="h1" variant="h5">
+             Sign up
+           </Typography>
+           <Box
+             component="form"
+             onSubmit={(e) => {
+               register(e);
+             }}
+             noValidate
+             sx={{ mt: 1 }}
+           >
+             <TextField
+               value={firstName}
+               margin="normal"
+               required
+               fullWidth
+               name="firstname"
+               label="Firstname"
+               id="firstname"
+               autoComplete="firstname"
+               onChange={(e) => setFirstName(e.target.value)}
+             />
+             <TextField
+               value={lastName}
+               margin="normal"
+               required
+               fullWidth
+               name="lastname"
+               label="Lastname"
+               id="lastname"
+               autoComplete="lastname"
+               onChange={(e) => setLastName(e.target.value)}
+             />
 
-            <TextField
-              value={username}
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              value={secretcode}
-              margin="normal"
-              required
-              fullWidth
-              name="secretcode"
-              label="Secretcode"
-              id="secretcode"
-              onChange={(e) => setSecretCode(e.target.value)}
-            />
-            <TextField
-              value={password}
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <TextField
-              value={retypepassword}
-              margin="normal"
-              required
-              fullWidth
-              name="retypepassword"
-              label="Re-enter Password"
-              type="password"
-              id="retypepassword"
-              autoComplete="current-password"
-              onChange={(e) => setRetypepassword(e.target.value)}
-            />
-            <Typography component="h3" variant="h5">
-              {loginerror}
-            </Typography>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
+             <TextField
+               value={username}
+               margin="normal"
+               required
+               fullWidth
+               id="email"
+               label="Email"
+               name="email"
+               autoComplete="email"
+               autoFocus
+               onChange={(e) => setName(e.target.value)}
+             />
+             <TextField
+               value={secretcode}
+               margin="normal"
+               required
+               fullWidth
+               name="secretcode"
+               label="Secretcode"
+               id="secretcode"
+               onChange={(e) => setSecretCode(e.target.value)}
+             />
+             <TextField
+               value={password}
+               margin="normal"
+               required
+               fullWidth
+               name="password"
+               label="Password"
+               type="password"
+               id="password"
+               autoComplete="current-password"
+               onChange={(e) => setPassword(e.target.value)}
+             />
+             <TextField
+               value={retypepassword}
+               margin="normal"
+               required
+               fullWidth
+               name="retypepassword"
+               label="Re-enter Password"
+               type="password"
+               id="retypepassword"
+               autoComplete="current-password"
+               onChange={(e) => setRetypepassword(e.target.value)}
+             />
+             <Typography component="h3" variant="h5">
+               {loginerror}
+             </Typography>
+             <Button
+               type="submit"
+               fullWidth
+               variant="contained"
+               sx={{ mt: 3, mb: 2 }}
+             >
+               Sign Up
+             </Button>
 
-            <Grid container>
-              <Grid item xs></Grid>
-              <Grid item></Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+             <Grid container>
+               <Grid item xs></Grid>
+               <Grid item></Grid>
+             </Grid>
+           </Box>
+         </Box>
+       </Container>
+     </ThemeProvider>
+   );
 };
 
 export default function EmployerSignup() {

@@ -28,10 +28,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton } from "@mui/material";
+import {IconButton} from "@mui/material";
 import { Box } from "@mui/system";
-import PaidIcon from "@mui/icons-material/Paid";
+import PaidIcon from '@mui/icons-material/Paid';
 import { useAuth } from "./useAuth";
+import DateRangeIcon from '@mui/icons-material/DateRange';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -73,16 +74,19 @@ BootstrapDialogTitle.propTypes = {
 
 export default function Individual() {
   const { user } = useAuth();
+  const [leaves, setLeave] = useState();
   const [employees, setEmployees] = useState([]);
   const [employer, setEmployername] = useState();
   const { id } = useParams();
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = useState();
   const [rate, setRate] = useState(0);
   const [hourly, setHourly] = useState(0);
   const [days, setDays] = useState(0);
   const [overtime, setOvertime] = useState(0);
   const [deductions, setDeductions] = useState(0);
   const [overall, setOverall] = useState(0);
+
   let feedback;
   const [totalsalary, setTotalsalary] = useState();
   const FindUserType = async (email) => {
@@ -108,6 +112,23 @@ export default function Individual() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+
+const setQuota = async (employerName, employeeName, value) => {
+  let call = "https://businessaide-backend.herokuapp.com/changeSingleQuota/?";
+  call = call + "employerName=" + employerName + "&";
+  call = call + "employeeName=" + employeeName + "&";
+  call = call + "value=" + value;
+  let result = await (await fetch(call)).json();
+  alert(result.reason);
+  
+}
 
   const sendPayroll = async (
     dailySalary,
@@ -142,6 +163,8 @@ export default function Individual() {
     setTotalsalary(
       data._document.data.value.mapValue.fields.overallSalary.stringValue
     );
+    setLeave(data._document.data.value.mapValue.fields.leaveQuota.stringValue);
+
   };
 
   console.log(employees);
@@ -206,10 +229,17 @@ export default function Individual() {
             {employees._document.data.value.mapValue.fields.workExp.stringValue}
           </h3>
           <h3>
+            <DateRangeIcon></DateRangeIcon> Available Leaves:{" "}
+            {leaves}
+          </h3>
+          <h3>
             <PaidIcon></PaidIcon> Salary for the Month: {totalsalary}
           </h3>
           <Button variant="outlined" onClick={handleClickOpen}>
             add new payroll
+          </Button>
+          <Button variant="outlined" onClick={handleClickOpen2}>
+            set leave quota
           </Button>
           <BootstrapDialog
             onClose={handleClose}
@@ -235,8 +265,13 @@ export default function Individual() {
                   autoComplete="rate"
                   autoFocus
                   onChange={(e) => {
-                    setRate(Number(e.target.value));
-                    setOverall(e.target.value * days + overtime - deductions);
+                    console.log(isNaN(e.target.value));
+                    if (!isNaN(e.target.value)) {
+                      setRate(Number(e.target.value));
+                      setOverall(e.target.value * days + overtime - deductions);
+                    } else {
+                      alert("please enter a number!");
+                    }
                   }}
                 />
 
@@ -251,10 +286,15 @@ export default function Individual() {
                   autoComplete="days"
                   autoFocus
                   onChange={(e) => {
+                    if (!isNaN(e.target.value)) {
                     setDays(Number(e.target.value));
                     setOverall(
                       rate * e.target.value + overtime * hourly - deductions
                     );
+                    }
+                    else {
+                       alert("please enter a number!");
+                    }
                   }}
                 />
                 <TextField
@@ -268,10 +308,15 @@ export default function Individual() {
                   autoComplete="hourly"
                   autoFocus
                   onChange={(e) => {
+                     if (!isNaN(e.target.value)) {
                     setHourly(Number(e.target.value));
                     setOverall(
                       rate * days + overtime * e.target.value - deductions
                     );
+                     }
+                     else {
+                       alert("please enter a number!");
+                     }
                   }}
                 />
                 <TextField
@@ -285,10 +330,15 @@ export default function Individual() {
                   autoComplete="overtime"
                   autoFocus
                   onChange={(e) => {
+                      if (!isNaN(e.target.value)) {
                     setOvertime(Number(e.target.value));
                     setOverall(
                       rate * days + Number(e.target.value) * hourly - deductions
                     );
+                      }
+                      else {
+                        alert("please enter a number!");
+                      }
                   }}
                 />
                 <TextField
@@ -300,10 +350,15 @@ export default function Individual() {
                   label="Deductions"
                   id="deductions"
                   onChange={(e) => {
+                      if (!isNaN(e.target.value)) {
                     setDeductions(Number(e.target.value));
                     setOverall(
                       rate * days + overtime * hourly - e.target.value
                     );
+                      }
+                      else {
+                        alert("please enter a number!")
+                      }
                   }}
                 />
                 <h3>The overall monthly salary is: {overall}</h3>
@@ -325,6 +380,51 @@ export default function Individual() {
                     employer
                   );
                   handleClose();
+                }}
+              >
+                SUBMIT
+              </Button>
+            </DialogActions>
+          </BootstrapDialog>
+          <BootstrapDialog
+            onClose={handleClose2}
+            aria-labelledby="customized-dialog-title"
+            open={open2}
+          >
+            <BootstrapDialogTitle
+              id="customized-dialog-title"
+              onClose={handleClose2}
+            >
+              Set Leave Quota for the Year
+            </BootstrapDialogTitle>
+            <DialogContent dividers>
+              <Box component="form" onSubmit noValidate sx={{ mt: 1 }}>
+                <TextField
+                  value={leaves}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="leaves"
+                  label="Set Leave Quota"
+                  name="leaves"
+                  autoComplete="leaves"
+                  autoFocus
+                  onChange={(e) => {
+                    console.log(isNaN(e.target.value));
+                    if (!isNaN(e.target.value)) {
+                      setLeave(Number(e.target.value));
+                    } else {
+                      alert("please enter a number!");
+                    }
+                  }}
+                />
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  setQuota(employer, employeename, leaves);
+                  handleClose2();
                 }}
               >
                 SUBMIT

@@ -25,7 +25,7 @@ const bull = (
 );
 //const { user } = useAuth();
 export default function Employeetasklist() {
-  window.onload = function () {
+  window.onload = function() {
     if (!window.location.hash) {
       window.location = window.location + "#loaded";
       window.location.reload();
@@ -34,6 +34,7 @@ export default function Employeetasklist() {
   const { user } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [progress, setProgress] = useState([]);
+  const [errormessage, setErrormessage] = useState();
   const refreshPage = () => {
     window.location.reload();
   };
@@ -41,7 +42,7 @@ export default function Employeetasklist() {
   var task = [];
   var employer;
   const displayTask = async (email) => {
-    let call1 = "https://businessaide-backend.herokuapp.com/findUserType/?";
+    let call1 = "/findUserType/?";
     call1 = call1 + "email=" + email;
     let result1 = await (await fetch(call1)).json();
     console.log(result1);
@@ -55,10 +56,12 @@ export default function Employeetasklist() {
     employer = result2.employerName;
     console.log(employer);
     //setEmployerName(result2);
-    let call =
-      "https://businessaide-backend.herokuapp.com/displayEmployeeTask/?";
+    let call = "https://businessaide-backend.herokuapp.com/displayEmployeeTask/?";
     call = call + "employeeName=" + result1.name;
     let result = await (await fetch(call)).json();
+    if (result.status == "empty") {
+      setErrormessage("There are no tasks");
+    }
     for (let i = 0; i < result.body.length; i++) {
       task[i] = result.body[i];
       setTasks((tasks) => [...tasks, result.body[i]]);
@@ -68,8 +71,7 @@ export default function Employeetasklist() {
       //console.error(err)
     }
     for (let i = 0; i < task.length; i++) {
-      let calltask =
-        "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
+      let calltask = "https://businessaide-backend.herokuapp.com/mainTaskProgress/?";
       calltask = calltask + "tasks=" + task[i] + "&";
       calltask = calltask + "employerName=" + result2.employerName;
       let resulttask = await (await fetch(calltask)).json();
@@ -109,22 +111,21 @@ export default function Employeetasklist() {
     console.log(progress);
   }, [tasks]);
 
-  return tasks === [] ? (
-    <div>loading...</div>
-  ) : (
+  return (
     <div>
       <h1>Task Page</h1>
-
-      <Grid
-        container
-        rowSpacing={20}
-        columns={12}
-        columnSpacing={{ xs: 2, sm: 2, md: 3 }}
-      >
-        {tasks === [] ? (
-          <h2>loading...</h2>
-        ) : (
-          tasks.map((doc, index) => {
+      {errormessage ? (
+        <h2>There are no tasks!</h2>
+      ) : tasks.length === 0 ? (
+        <div>loading...</div>
+      ) : (
+        <Grid
+          container
+          rowSpacing={20}
+          columns={12}
+          columnSpacing={{ xs: 2, sm: 2, md: 3 }}
+        >
+          {tasks.map((doc, index) => {
             return (
               <Grid item xs={3}>
                 <Card sx={{ maxWidth: 345 }}>
@@ -163,9 +164,9 @@ export default function Employeetasklist() {
                 </Card>
               </Grid>
             );
-          })
-        )}
-      </Grid>
+          })}
+        </Grid>
+      )}
     </div>
   );
 }

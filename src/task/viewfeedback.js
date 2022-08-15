@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
+import { Stack } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -29,16 +30,14 @@ export default function FullScreenDialog(props) {
 
   return (
     <div>
+        <Stack direction="row" justifyContent="center">
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        style={{
-          position: "absolute",
-          left: 555,
-        }}
       >
         View Feedback from Employees
       </Button>
+      </Stack>
       <Dialog
         fullScreen
         open={open}

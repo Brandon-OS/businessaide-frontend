@@ -29,6 +29,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
+import { Stack } from "@mui/material";
 //import subtaskSubmit from "./subtasksubmit";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -124,6 +125,7 @@ export default function CreateFeedback(props) {
     call = call + "anonymousCheck=" + anonymousCheck + "&";
     call = call + "mainTaskName=" + mainTaskName;
     let result = await (await fetch(call)).json();
+    alert(result.reason);
     setReturned(result.body);
   };
   //useEffect(()=>{
@@ -133,16 +135,15 @@ export default function CreateFeedback(props) {
   return (
     <div>
       <span style={{ color: "white" }}> hahahahahahaa </span>
+      <Stack direction="row" justifyContent="center">
       <Button
         variant="outlined"
         onClick={handleClickOpen}
-        style={{
-          position: "absolute",
-          left: 617,
-        }}
+       
       >
         Create Feedback
       </Button>
+      </Stack>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -215,6 +216,7 @@ export default function CreateFeedback(props) {
               //</BootstrapDialog>? alert("the employee is not found")
               //: console.log("subtask added");
               handleClose();
+              console.log(anonymousCheck);
             }}
           >
             Create Feedback

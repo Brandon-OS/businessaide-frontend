@@ -1,6 +1,12 @@
 import { Component } from "react";
 import { useAuth } from "../useAuth";
-import { Link, Route, Routes, BrowserRouter } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  BrowserRouter,
+  useNavigate,
+} from "react-router-dom";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,6 +21,10 @@ import Employeesingletask from "./employeesingletask";
 import Employeetasklist from "./employeedisplaytask";
 import EmployeeWelcome from "./employeewelcome";
 import Salary from "./salary";
+import ApplyLeave from "./employeesapplyleave";
+import EmployeeLeave from "./employeeviewleave";
+import EmployeeApprovedLeave from "./employeeviewapprovedleave";
+import EmployeeRejectedLeave from "./employeeviewrejectedleave";
 import {
   getAuth,
   signInWithPopup,
@@ -31,10 +41,11 @@ function EmployeeBar(props) {
   };
   const { signOutWithGoogle } = useAuth();
   const auth = getAuth();
+  let nav = useNavigate();
   const [employeeId, setEmployeeId] = useState("");
   const [username, setUsername] = useState();
   const FindUserType = async (email) => {
-    let call = "/findUserType/?";
+    let call = "https://businessaide-backend.herokuapp.com/findUserType/?";
     call = call + "email=" + email;
     let result = await (await fetch(call)).json();
     console.log(result);
@@ -61,6 +72,38 @@ function EmployeeBar(props) {
             <Button>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
+                to="/employees/employeeviewapprovedleave"
+              >
+                View Approved Leaves
+              </Link>
+            </Button>
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/employees/employeeviewrejectedleave"
+              >
+                View Rejected Leaves
+              </Link>
+            </Button>
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/employees/employeeviewleave"
+              >
+                View Pending Leaves
+              </Link>
+            </Button>
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/employees/employeeapplyleave"
+              >
+                Apply for Leave
+              </Link>
+            </Button>
+            <Button>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
                 to="/employees/salary"
               >
                 Payroll
@@ -74,7 +117,13 @@ function EmployeeBar(props) {
                 View Tasks
               </Link>
             </Button>
-            <Button onClick={signOutWithGoogle} color="inherit">
+            <Button
+              onClick={() => {
+                signOutWithGoogle();
+                nav("/");
+              }}
+              color="inherit"
+            >
               sign out
             </Button>
           </Toolbar>
@@ -82,6 +131,22 @@ function EmployeeBar(props) {
       </Box>
       <Routes>
         <Route path="/" element={<EmployeeWelcome />} />
+        <Route
+          path="/employees/employeeapplyleave"
+          element={<ApplyLeave />}
+        />
+         <Route
+          path="/employees/employeeviewrejectedleave"
+          element={<EmployeeRejectedLeave />}
+        />
+        <Route
+          path="/employees/employeeviewapprovedleave"
+          element={<EmployeeApprovedLeave />}
+        />
+         <Route
+          path="/employees/employeeviewleave"
+          element={<EmployeeLeave />}
+        />
         <Route
           path="/employees/employeedisplaytask"
           element={<Employeetasklist />}

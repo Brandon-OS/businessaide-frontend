@@ -45,6 +45,7 @@ export default function Welcome() {
   //const q = query(collection(db, "users"), where("uid", "==", user.uid));
   // const docs = await getDocs(q);
   const [username, setUsername] = useState();
+  const [secretcode, setSecretCode] = useState();
   const FindUserType = async (email) => {
     let call = "https://businessaide-backend.herokuapp.com/findUserType/?";
     call = call + "email=" + email;
@@ -53,12 +54,18 @@ export default function Welcome() {
     //setUsertype(result.body);
     //setUsername(result.name);
     setUsername(result.name);
+    let call2 = "https://businessaide-backend.herokuapp.com/getSecretCode/?";
+    call2 = call2 + "employerName=" + result.name;
+    let result2 = await (await fetch(call2)).json();
+    setSecretCode(result2);
   };
+
+  
   useEffect(() => {
     FindUserType(user.email);
   }, []);
   //console.log(user.uid);
-  return username ? (
+  return username&&secretcode ? (
     <ThemeProvider theme={theme}>
       <div>
         <h1>Welcome {username}!</h1>
@@ -87,10 +94,7 @@ export default function Welcome() {
               </ListItemIcon>
               <Typography fontFamily={'"Segoe UI"'} variant="h6">
                 To create a task, please go to the "add task" page and fill in
-                all the fields. Please remember to register an employee using
-                the secret code you created before creating task because
-                otherwise there will be no whom employee you can assign the task
-                to
+                all the fields
               </Typography>
             </Card>
           </ListItem>
@@ -123,6 +127,16 @@ export default function Welcome() {
               <Typography fontFamily={'"Segoe UI"'} variant="h6">
                 To increase the task progress, please enter a number and click
                 "increase progress by"
+              </Typography>
+            </Card>
+          </ListItem>
+          <ListItem>
+            <Card>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <Typography fontFamily={'"Segoe UI"'} variant="h6">
+                Your Secret Code is : {secretcode}
               </Typography>
             </Card>
           </ListItem>

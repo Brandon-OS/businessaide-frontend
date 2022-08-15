@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/employee.feature";
 import { useNavigate } from "react-router-dom";
 
+
 //import { useAuthState } from "react-firebase-hooks/auth";
 import {
   getAuth,
@@ -56,7 +57,7 @@ const Styles = styled.div`
 
 const theme = createTheme();
 const Submit = () => {
-  const { user } = useAuth();
+  const {user} = useAuth();
   const { signOutWithGoogle } = useAuth();
   const { registerWithEmailAndPassword } = useAuth();
   const { signInWithGoogle } = useAuth();
@@ -68,7 +69,7 @@ const Submit = () => {
   const [workExp, setWorkExp] = useState("");
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
-  const [phoneNum, setphoneNum] = useState("");
+  const [phoneNum,setphoneNum] = useState("");
   const [username, setName] = useState("");
   const [loginerror, setError] = useState("");
   const [password, setPassword] = useState(null);
@@ -89,6 +90,8 @@ const Submit = () => {
       alert("please enter an email");
     } else if (password !== retypepassword) {
       alert("passwords do not match");
+    } else if (password.length < 6) {
+      alert("password must contain at least 6 characters/digits");
     } else {
       // Create a new user with Firebase
       let call = "https://businessaide-backend.herokuapp.com/SendEmployee/?";
@@ -287,7 +290,9 @@ const Submit = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
             <TextField
               value={retypepassword}

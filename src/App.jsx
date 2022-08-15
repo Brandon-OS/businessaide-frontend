@@ -20,10 +20,11 @@ import { useState } from "react";
 
 //import HomePage from "./components/signin/mainpage";
 import EmployeeBar from "./employees/employeenavbar";
+import { Navigate } from "react-router-dom";
 
 export default function App() {
   const FindUserType = async (email) => {
-    let call = "https://businessaide-backend.herokuapp.com/findUserType/?";
+    let call = "/findUserType/?";
     call = call + "email=" + email;
     let result = await (await fetch(call)).json();
     console.log(result);
@@ -45,7 +46,9 @@ export default function App() {
         usertype == "employer" ? (
           <Home name={username} />
         ) : (
-          <EmployeeBar name={username} />
+          <div>
+            <EmployeeBar name={username} />
+          </div>
         )
       ) : (
         <ButtonAppBar />

@@ -12,7 +12,7 @@ import { getFirebase } from "react-redux-firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename={window.location.pathname}>
     <ProvideAuth>
       <Provider store={store}>
         <App />

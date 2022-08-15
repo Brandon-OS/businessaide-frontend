@@ -27,6 +27,7 @@ import { Grid, ListItem, TextField } from "@mui/material";
 import CreateSubtask from "../task/createsubtask";
 import CreateFeedback from "./employeefeedback";
 import { List } from "@mui/material";
+import { Stack } from "@mui/material";
 
 const auth = getAuth();
 const user = auth.currentUser;
@@ -131,8 +132,7 @@ export default function Employeesingletask(props) {
       username = result1.name;
       setEmployeename(result1.name);
       //setEmployeename(result1.name);
-      let call2 =
-        "https://businessaide-backend.herokuapp.com/getEmployerName/?";
+      let call2 = "https://businessaide-backend.herokuapp.com/getEmployerName/?";
       call2 = call2 + "employeeName=" + result1.name;
       let result2 = await (await fetch(call2)).json();
       employer = result2.employerName;
@@ -155,8 +155,7 @@ export default function Employeesingletask(props) {
       setStatus([]);
       setProgress([]);
       for (let i = 0; i < subtasktemp.length; i++) {
-        let call =
-          "https://businessaide-backend.herokuapp.com/getSubTaskData/?";
+        let call = "https://businessaide-backend.herokuapp.com/getSubTaskData/?";
         call = call + "subTaskName=" + subtasktemp[i] + "&";
         call = call + "mainTaskName=" + maintask + "&";
         call = call + "employerName=" + employer;
@@ -229,7 +228,8 @@ export default function Employeesingletask(props) {
     call = call + "value=" + value + "&";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
-    await (await fetch(call)).json();
+    let result = await (await fetch(call)).json();
+    alert(result.reason);
 
     //setProgress(progress[index]+1);
   };
@@ -244,7 +244,7 @@ export default function Employeesingletask(props) {
     call = call + "subTaskName=" + subTaskName + "&";
     call = call + "mainTaskName=" + mainTaskName + "&";
     call = call + "employerName=" + employerName;
-    await (await fetch(call)).json();
+    let result = await (await fetch(call)).json();
   };
 
   const completeMainTask = async (mainTaskName, employerName) => {
@@ -307,16 +307,14 @@ export default function Employeesingletask(props) {
           <div>loading...</div>
         ) : (
           <div>
-            <List>
-              <ListItem></ListItem>
-              <ListItem>
+            <Stack direction="row" justifyContent="center">
                 <CreateFeedback
                   employerName={employerName}
                   employeeName={employeeName}
                   mainTaskName={maintask}
                 />
-              </ListItem>
-            </List>
+                </Stack>
+             
           </div>
         )}
         <div style={{ color: "white" }}>hahahah</div>
@@ -379,7 +377,12 @@ export default function Employeesingletask(props) {
                             label="Increase New Progress by"
                             autoFocus
                             onChange={(e) => {
-                              setnewValue(e.target.value);
+                              if (!isNaN(e.target.value)) {
+                                setnewValue(e.target.value);
+                              } else {
+                                alert("please enter a number");
+                              }
+                              
                             }}
                           />
 

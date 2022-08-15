@@ -1,16 +1,16 @@
 import React from "react";
-import ListSubheader from "@mui/material/ListSubheader";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
+import ListSubheader from '@mui/material/ListSubheader';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import SendIcon from '@mui/icons-material/Send';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
 import { useEffect } from "react";
 import { db } from "../firebaseini";
 import { useState } from "react";
@@ -27,10 +27,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton } from "@mui/material";
+import {IconButton} from "@mui/material";
 import { Box } from "@mui/system";
-import PaidIcon from "@mui/icons-material/Paid";
-import { TextField } from "@mui/material";
+import PaidIcon from '@mui/icons-material/Paid';
+import {TextField} from "@mui/material";
 import { Link } from "react-router-dom";
 
 import {
@@ -44,42 +44,42 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
-
-const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
-
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-};
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+    },
+  }));
+  
+  const BootstrapDialogTitle = (props) => {
+    const { children, onClose, ...other } = props;
+  
+    return (
+      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+        {children}
+        {onClose ? (
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </DialogTitle>
+    );
+  };
+  
+  BootstrapDialogTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+  };
 const employeeCollectionRef = collection(db, "Employees");
 const Showpayroll = (props) => {
   let [employeenames, setEmployeenames] = useState([]);
@@ -101,6 +101,7 @@ const Showpayroll = (props) => {
   const [open, setOpen] = React.useState(false);
   let totalsalary = 0;
   const [total, setTotal] = useState(0);
+  const [errormessage, setErrormessage] = useState();
   const handleClick = () => {
     setOpen(!open);
   };
@@ -135,10 +136,12 @@ const Showpayroll = (props) => {
     alert(feedback.reason);
   };
   const getEmployees = async (employerName) => {
-    let call =
-      "https://businessaide-backend.herokuapp.com/getAllEmployeeSalary/?";
+    let call = "https://businessaide-backend.herokuapp.com/getAllEmployeeSalary/?";
     call = call + "employerName=" + employerName + "&";
     let result = await (await fetch(call)).json();
+    if (result.status == "error") {
+      setErrormessage("You currently have no employees!");
+    }
     console.log(result.body);
     setEmployees(
       result.body.map((doc) => ({
@@ -184,31 +187,35 @@ const Showpayroll = (props) => {
           }
         />
       </ListItemButton>
-      {employees.length === 0
-        ? ""
-        : employees.map((doc) => {
-            console.log(doc);
-            return (
-              <Link
-                to={"/Individual/" + doc.name}
-                style={{
-                  textDecoration: "none",
-                  color: "black",
-                }}
-                key={doc}
-              >
-                <ListItemButton key={doc.name}>
-                  <ListItemIcon>
-                    <SendIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={doc.name}
-                    secondary={"salary for the month: " + doc.overallSalary}
-                  />
-                </ListItemButton>
-              </Link>
-            );
-          })}
+      {errormessage ? (
+        <h1>{errormessage}</h1>
+      ) : employees.length == 0 ? (
+        <div>loading...</div>
+      ) : (
+        employees.map((doc) => {
+          console.log(doc);
+          return (
+            <Link
+              to={"/Individual/" + doc.name}
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+              key={doc}
+            >
+              <ListItemButton key={doc.name}>
+                <ListItemIcon>
+                  <SendIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={doc.name}
+                  secondary={"salary for the month: " + doc.overallSalary}
+                />
+              </ListItemButton>
+            </Link>
+          );
+        })
+      )}
     </List>
   );
 };
